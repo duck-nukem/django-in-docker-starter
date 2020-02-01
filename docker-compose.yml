@@ -9,7 +9,13 @@ services:
       - ${PWD}/src:/opt/app:cached
     ports:
       - "8000:8000"
+
   db:  
     image: postgres:12-alpine
     environment:
       POSTGRES_PASSWORD: "password"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
