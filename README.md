@@ -1,4 +1,5 @@
 # Starter project for Docker + Django + Postgres + nginx
+![CI](https://github.com/kreatemore/django-in-docker-starter/workflows/CI/badge.svg)
 
 ## Important:
 
