@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: docker-compose build
+      
+    - name: Run app
+      run: docker-compose up -d web
+      
+    - name: Check app is running
+      run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" localhost) == 200 ]; then exit 0; else exit 1; fi'
+      
+    - name: Teardown
+      run: docker-compose down
