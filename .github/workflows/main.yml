@@ -17,7 +17,7 @@ jobs:
       run: docker-compose build
       
     - name: Run app
-      run: docker-compose up -d web
+      run: docker-compose up -d web app
       
     - name: Check app is running
       run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" localhost) == 200 ]; then exit 0; else exit 1; fi'
