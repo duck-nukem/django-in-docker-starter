@@ -17,6 +17,7 @@ Prerequisites:
 2. Change remote in git to point to your repo (or just reinit wit `git init`)
 3. Generate your SECRET_KEY (example: https://djecrety.ir/)
 4. `docker-compose up web`
+5. A django app is now running @ http://localhost:8080/
 
 ## Structure
 
