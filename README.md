@@ -1,4 +1,4 @@
-# Starter project for Docker + Django + Postgres
+# Starter project for Docker + Django + Postgres + nginx
 
 ## Important:
 
