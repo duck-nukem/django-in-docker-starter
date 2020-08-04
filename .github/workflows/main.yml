@@ -26,7 +26,7 @@ jobs:
         time: '30s'
     
     - name: Check app is running
-      run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" localhost) == 200 ]; then exit 0; else exit 1; fi'
+      run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit 1; fi'
       
     - name: Teardown
       run: docker-compose down
