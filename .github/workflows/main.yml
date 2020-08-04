@@ -19,6 +19,12 @@ jobs:
     - name: Run app
       run: docker-compose up -d web app
       
+      # Should be a better way, but oh well.
+    - name: Wait until app starts
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '30s'
+    
     - name: Check app is running
       run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" localhost) == 200 ]; then exit 0; else exit 1; fi'
       
