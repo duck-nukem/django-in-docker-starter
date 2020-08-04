@@ -1,6 +1,10 @@
 # Starter project for Docker + Django + Postgres + nginx
 ![CI](https://github.com/kreatemore/django-in-docker-starter/workflows/CI/badge.svg)
 
+This is a common configuration I had to set up every time I wanted to start a new django project. 
+
+I did this for myself, now it's yours to use ✨
+
 ## Important:
 
 `SECRET_KEY` in `settings.py` is *EMPTY* - you must generate it. 
