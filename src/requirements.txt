@@ -3,4 +3,4 @@ Django==3.0.9
 pytz==2019.3
 sqlparse==0.3.0
 psycopg2==2.8.4
-uvicorn==0.11.3
+uvicorn==0.11.8
