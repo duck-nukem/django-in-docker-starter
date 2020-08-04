@@ -5,6 +5,8 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk add --no-cache \
         gcc \
+        libc-dev \
+        make \
         musl-dev \
         postgresql-client \
         postgresql-dev
@@ -15,5 +17,3 @@ COPY src /opt/app
 
 WORKDIR /opt/app
 RUN pip install -r requirements.txt
-
-ENTRYPOINT python manage.py migrate && python manage.py runserver 0.0.0.0:8000

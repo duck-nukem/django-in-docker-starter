@@ -1,21 +1,38 @@
-
 version: "3.6"
 services:
-  app:
-    build: .
-    depends_on:
-      - db
-    volumes:
-      - ${PWD}/src:/opt/app:cached
-    ports:
-      - "8000:8000"
-
-  db:  
+  db:
     image: postgres:12-alpine
     environment:
       POSTGRES_PASSWORD: "password"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  console: &console
+    build: .
+    entrypoint: python manage.py
+    depends_on:
+      - db
+    volumes:
+      - ./src:/opt/app:cached
+
+  app:
+    <<: *console
+    entrypoint: sh /opt/app/bin/start.sh
+    volumes:
+      - ./src:/opt/app:cached
+      - app_statics:/var/www/static
+
+  web:
+    image: nginx:alpine
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./web/static:/var/www
+      - app_statics:/var/www/static
+
 volumes:
+  app_statics:
   postgres_data:
