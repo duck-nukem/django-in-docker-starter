@@ -7,20 +7,26 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Run app
-        run: docker-compose up -d web app
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: docker-compose build
       
-      - name: Wait until app starts
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '10s'
+    - name: Run app
+      run: docker-compose up -d web app
+      
+      # Should be a better way, but oh well.
+    - name: Wait until app starts
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
     
-      - name: Check app is running
-        run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit 1; fi'
+    - name: Check app is running
+      run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit 1; fi'
       
-      - name: Teardown
-        run: docker-compose down
+    - name: Teardown
+      run: docker-compose down
