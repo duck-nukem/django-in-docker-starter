@@ -1,5 +1,5 @@
 # Starter project for Docker + Django + Postgres + nginx
-![CI](https://github.com/kreatemore/django-in-docker-starter/workflows/CI/badge.svg)
+![CI](https://github.com/kreatemore/django-in-docker-starter/workflows/Build/badge.svg)
 
 This is a common configuration I had to set up every time I wanted to start a new django project. 
 
