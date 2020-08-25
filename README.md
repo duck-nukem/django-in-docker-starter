@@ -7,7 +7,7 @@ I did this for myself, now it's yours to use ✨
 
 ## Important:
 
-`SECRET_KEY` in `settings.py` is *EMPTY* - you must generate it. 
+`SECRET_KEY` in `settings.py` is now a random 64 char long string. It'll be regenerated every time Django starts. You might want to set it to a fix value.
 
 [Django SECRET_KEY](https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-SECRET_KEY)
 
