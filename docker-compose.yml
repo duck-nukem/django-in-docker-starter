@@ -6,12 +6,18 @@ services:
       POSTGRES_PASSWORD: "password"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
 
   console: &console
     build: .
     entrypoint: python manage.py
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./src:/opt/app:cached
 
