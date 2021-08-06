@@ -17,7 +17,7 @@ jobs:
       run: docker-compose build
       
     - name: Run app
-      run: docker-compose up -f docker-compose.yml -f docker-compose.prod.yml -d web app
+      run: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web app
       
       # Should be a better way, but oh well.
     - name: Wait until app starts
