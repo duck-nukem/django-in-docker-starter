@@ -27,6 +27,10 @@ def _generate_secret(length=64):
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# By using a randomly-generated secret, your sessions will be invalid if 
+# the server reloads.
+# To avoid this use something like
+# SECRET_KEY = 's1kr1t' if DEBUG else _generate_secret()
 SECRET_KEY = _generate_secret()
 
 # SECURITY WARNING: don't run with debug turned on in production!
