@@ -1,0 +1,4 @@
+version: "3.6"
+services:
+  app:
+    entrypoint: sh /opt/app/bin/start.sh
