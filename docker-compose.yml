@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   db:
-    image: postgres:12-alpine
+    image: postgres:alpine
     environment:
       POSTGRES_PASSWORD: "password"
     volumes:
@@ -12,18 +12,11 @@ services:
         timeout: 5s
         retries: 5
 
-  console: &console
+  app:
     build: .
-    entrypoint: python manage.py
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./src:/opt/app:cached
-
-  app:
-    <<: *console
-    entrypoint: sh /opt/app/bin/start.sh
     volumes:
       - ./src:/opt/app:cached
       - app_statics:/var/www/static
