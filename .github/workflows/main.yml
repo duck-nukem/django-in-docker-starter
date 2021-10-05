@@ -18,15 +18,9 @@ jobs:
       
     - name: Run app
       run: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web app
-      
-      # Should be a better way, but oh well.
-    - name: Wait until app starts
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '10s'
     
     - name: Check app is running
-      run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit 1; fi'
+      run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080); fi'
       
     - name: Teardown
       run: docker-compose down
