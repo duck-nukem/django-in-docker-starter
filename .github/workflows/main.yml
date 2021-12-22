@@ -27,15 +27,5 @@ jobs:
           image: "django-in-docker-starter_app:latest"
           fail-build: true
 
-      - uses: anchore/scan-action@v3
-        with:
-          image: "django-in-docker-starter_web:latest"
-          fail-build: true
-
-      - uses: anchore/scan-action@v3
-        with:
-          image: "django-in-docker-starter_db:latest"
-          fail-build: true
-
       - name: Teardown
         run: docker-compose down
