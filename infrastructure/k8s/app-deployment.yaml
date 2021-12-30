@@ -33,7 +33,11 @@ spec:
           name: app
           ports:
             - containerPort: 8000
-          resources: {}
+          resources:
+            limits:
+              cpu: "1"
+            requests:
+              cpu: "0.5"
           imagePullPolicy: Never
           volumeMounts:
             - mountPath: /var/www/static
