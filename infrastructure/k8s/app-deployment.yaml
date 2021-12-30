@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app
+    spec:
+      containers:
+        - env:
+            - name: DB_PORT
+              value: '5432'
+          image: django-in-docker-starter_app
+          command: ["sh", "/opt/app/bin/start.sh"]
+          name: app
+          ports:
+            - containerPort: 8000
+          resources: {}
+          imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /var/www/static
+              name: app-statics
+      restartPolicy: Always
+      volumes:
+        - name: app-statics
+          persistentVolumeClaim:
+            claimName: app-statics
+status: {}

@@ -7,7 +7,7 @@ http {
     include /etc/nginx/mime.types;
 
     upstream webapp {
-        server app:8000;
+        server ${APP_HOST}:8000;
     }
 
     server {

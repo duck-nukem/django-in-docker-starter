@@ -36,7 +36,7 @@ SECRET_KEY = _generate_secret()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'postgres'),
         'USER': os.environ.get('DB_USER', 'postgres'),
         'PASSWORD': os.environ.get('DB_PASS', 'password'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': int(os.environ.get('DB_PORT', '5432')),
+        'HOST': os.environ.get('DB_SERVICE_HOST', 'db'),
+        'PORT': int(os.environ.get('DB_SERVICE_PORT', '5432')),
         'OPTIONS': {
             'connect_timeout': 30,
         }
