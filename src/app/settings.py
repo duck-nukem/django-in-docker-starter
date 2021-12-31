@@ -36,7 +36,8 @@ SECRET_KEY = _generate_secret()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS = ['localhost']
+ALLOWED_HOSTS = ['localhost']
+CSRF_TRUSTED_ORIGINS = [f'http://{host}' for host in ALLOWED_HOSTS]
 
 # Application definition
 
