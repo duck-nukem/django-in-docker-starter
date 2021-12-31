@@ -27,9 +27,6 @@ services:
   web:
     build:
       context: web
-    command: ["sh", "/usr/local/bin/update_config.sh"]
-    environment:
-      - APP_HOST=app
     depends_on:
       - app
     ports:
