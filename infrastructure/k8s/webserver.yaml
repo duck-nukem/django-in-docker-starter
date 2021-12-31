@@ -25,11 +25,7 @@ spec:
         io.kompose.service: web
     spec:
       containers:
-        - env:
-            - name: APP_HOST
-              value: app
-          command: [ "sh", "/usr/local/bin/update_config.sh" ]
-          image: django-in-docker-starter_web
+        - image: django-in-docker-starter_web
           livenessProbe:
             exec:
               command: [ "cat", "/var/run/nginx.pid" ]
@@ -50,3 +46,23 @@ spec:
           persistentVolumeClaim:
             claimName: app-statics
 status: { }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    io.kompose.service: web
+  type: NodePort
+status:
+  loadBalancer: {}
