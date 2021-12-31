@@ -14,7 +14,7 @@ spec:
     matchLabels:
       io.kompose.service: app
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       annotations:
@@ -29,6 +29,20 @@ spec:
             - name: DB_PORT
               value: '5432'
           image: django-in-docker-starter_app
+          livenessProbe:
+            exec:
+              command: ["nc", "-zv", "localhost", "8000"]
+            initialDelaySeconds: 30
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+          readinessProbe:
+            exec:
+              command: ["nc", "-zv", "localhost", "8000"]
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+            initialDelaySeconds: 15
           command: ["sh", "/opt/app/bin/start.sh"]
           name: app
           ports:

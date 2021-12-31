@@ -14,7 +14,7 @@ spec:
     matchLabels:
       io.kompose.service: web
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       annotations:
@@ -30,10 +30,16 @@ spec:
               value: app
           command: [ "sh", "/usr/local/bin/update_config.sh" ]
           image: django-in-docker-starter_web
+          livenessProbe:
+            exec:
+              command: [ "cat", "/var/run/nginx.pid" ]
+          readinessProbe:
+            exec:
+              command: [ "cat", "/var/run/nginx.pid" ]
           name: web
           ports:
             - containerPort: 80
-          resources: {}
+          resources: { }
           imagePullPolicy: Never
           volumeMounts:
             - mountPath: /var/www/static
@@ -43,4 +49,4 @@ spec:
         - name: app-statics
           persistentVolumeClaim:
             claimName: app-statics
-status: {}
+status: { }

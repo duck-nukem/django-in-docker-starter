@@ -3,7 +3,6 @@ kind: HorizontalPodAutoscaler
 metadata:
   creationTimestamp: "2021-12-30T17:58:37Z"
   name: app
-  namespace: default
 spec:
   maxReplicas: 4
   minReplicas: 1

@@ -35,6 +35,12 @@ spec:
             failureThreshold: 5
             periodSeconds: 5
             timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            failureThreshold: 10
+            periodSeconds: 5
+            timeoutSeconds: 5
           name: db
           resources: {}
           volumeMounts:
