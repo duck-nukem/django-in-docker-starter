@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: app
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app
+    spec:
+      containers:
+        - env:
+            - name: DB_PORT
+              value: '5432'
+            - name: WEB_CONCURRENCY
+              value: '2'
+          image: django-in-docker-starter_app
+          livenessProbe:
+            exec:
+              command: ["nc", "-zv", "localhost", "8000"]
+            initialDelaySeconds: 30
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+          readinessProbe:
+            exec:
+              command: ["nc", "-zv", "localhost", "8000"]
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+            initialDelaySeconds: 15
+          command: [ "./bin/serve_django.sh" ]
+          name: app
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              cpu: "1"
+            requests:
+              cpu: "0.5"
+          imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /var/www/static
+              name: app-statics
+      restartPolicy: Always
+      volumes:
+        - name: app-statics
+          persistentVolumeClaim:
+            claimName: app-statics
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    io.kompose.service: app
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  creationTimestamp: "2021-12-30T17:58:37Z"
+  name: app
+spec:
+  maxReplicas: 4
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: app
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 180
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+      selectPolicy: Max
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app-statics
+  name: app-statics
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}

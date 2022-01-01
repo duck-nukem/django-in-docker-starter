@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+        - image: django-in-docker-starter_web
+          livenessProbe:
+            exec:
+              command: [ "cat", "/var/run/nginx.pid" ]
+          readinessProbe:
+            exec:
+              command: [ "cat", "/var/run/nginx.pid" ]
+          name: web
+          ports:
+            - containerPort: 80
+          resources: { }
+          imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /var/www/static
+              name: app-statics
+      restartPolicy: Always
+      volumes:
+        - name: app-statics
+          persistentVolumeClaim:
+            claimName: app-statics
+status: { }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    io.kompose.service: web
+  type: NodePort
+status:
+  loadBalancer: {}
