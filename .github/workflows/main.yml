@@ -20,7 +20,7 @@ jobs:
         run: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web app
 
       - name: Check app is running
-        run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080); fi'
+        run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) -lt "400" ]; then exit 0; else exit $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080); fi'
 
       - uses: anchore/scan-action@v3
         with:
