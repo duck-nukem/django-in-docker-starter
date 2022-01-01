@@ -37,6 +37,7 @@ SECRET_KEY = _generate_secret()
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
+CSRF_TRUSTED_ORIGINS = [f'http://{host}' for host in ALLOWED_HOSTS]
 
 # Application definition
 

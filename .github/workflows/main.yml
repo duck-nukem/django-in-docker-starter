@@ -19,8 +19,8 @@ jobs:
       - name: Run app
         run: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web app
 
-      - name: Check app is running
-        run: bash -c 'if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080) == 200 ]; then exit 0; else exit $(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080); fi'
+      - name: Check app is being served through nginx
+        run: nc -zv localhost 8080
 
       - uses: anchore/scan-action@v3
         with:
