@@ -1,7 +1,10 @@
 # K8S
 
-Currently it's only configured for local development/deployment.
-Images aren't pulled, they are built from the local Dockerfiles.
+## Caveats
+
+- Currently it's only configured for local development/deployment.
+- Images aren't pulled, they are built from the local Dockerfiles.
+- An **INSECURE** metrics-server is used. It's __PROBABLY__ fine, because it's only internal, but I'd still recommend finding another way to monitor metrics. 
 
 An example of how to make the images available for k8s is:
 ```bash
