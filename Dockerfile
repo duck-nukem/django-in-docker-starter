@@ -7,8 +7,8 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         libpython3-dev \
         libpq-dev \
-        gcc \
-    && rm -rf /var/lib/apt/lists/*
+        gcc && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip
 
@@ -17,13 +17,9 @@ WORKDIR /opt/app
 
 RUN pip install -r /opt/app/requirements.txt
 
-FROM python:3.11-slim-bullseye as runtime
+FROM python:3.11-alpine3.17 as runtime
 
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-        libpq-dev \
-    && rm -rf /var/lib/apt/lists/* && \
-    python -m pip install psycopg2-binary
+RUN python -m pip install psycopg2-binary
 
 COPY --from=build /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
 COPY --from=build /opt/app/ /opt/app/
