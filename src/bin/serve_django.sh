@@ -1,6 +1,6 @@
 #!/bin/sh
 
-until nc -z $DB_SERVICE_HOST $DB_SERVICE_PORT
+until python -c 'import socket; import os; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect((os.environ["DB_SERVICE_HOST"], int(os.environ["DB_SERVICE_PORT"])))'
 do
     echo "Waiting for DB Connection..."
     sleep 1
