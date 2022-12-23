@@ -26,6 +26,8 @@ jobs:
         with:
           image: "django-in-docker-starter_app:latest"
           fail-build: true
+          output-format: "table"
+          severity-cutoff: "medium"
 
       - name: Teardown
         run: docker-compose down
