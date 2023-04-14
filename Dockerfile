@@ -19,7 +19,7 @@ RUN pip install -r /opt/app/requirements.txt
 
 FROM python:3.11-alpine3.17 as runtime
 
-RUN python -m pip install psycopg2-binary
+RUN python -m pip install "psycopg[binary,pool]"
 
 COPY --from=build /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
 COPY --from=build /opt/app/ /opt/app/
