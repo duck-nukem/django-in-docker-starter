@@ -133,3 +133,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/static/'
+
+CUSTOM_CHECKS = [
+    'app.check_package_updates',
+]
