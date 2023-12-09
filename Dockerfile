@@ -19,6 +19,7 @@ RUN pip install -r /opt/app/requirements.txt
 
 FROM python:3.12-alpine3.17 as runtime
 
+RUN pip install --upgrade pip
 RUN python -m pip install "psycopg[binary,pool]"
 
 COPY --from=build /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
