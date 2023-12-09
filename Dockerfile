@@ -21,7 +21,7 @@ FROM python:3.12-alpine3.17 as runtime
 
 RUN python -m pip install "psycopg[binary,pool]"
 
-COPY --from=build /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
+COPY --from=build /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
 COPY --from=build /opt/app/ /opt/app/
 
 WORKDIR /opt/app
