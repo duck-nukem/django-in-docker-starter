@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bullseye AS build
+FROM python:3.13-slim-bullseye AS build
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -17,7 +17,7 @@ WORKDIR /opt/app
 
 RUN pip install -r /opt/app/requirements.txt
 
-FROM python:3.12-alpine3.17 as runtime
+FROM python:3.13-alpine3.21 as runtime
 
 RUN pip install --upgrade pip
 RUN python -m pip install "psycopg[binary,pool]"
