@@ -13,8 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build
-        run: docker compose build -q
+      - name: Build application
+        uses: docker/build-push-action@v4
+        with:
+          tags: localbuild/django-in-docker-starter:latest
+          push: false
+          load: true
 
       - name: Run app
         run: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d web app
@@ -24,7 +28,7 @@ jobs:
 
       - uses: anchore/scan-action@v3
         with:
-          image: "django-in-docker-starter_app:latest"
+          image: "localbuild/django-in-docker-starter:latest"
           fail-build: true
           output-format: "table"
           severity-cutoff: "medium"
