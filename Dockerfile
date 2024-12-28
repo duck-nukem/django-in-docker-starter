@@ -22,7 +22,7 @@ FROM python:3.13-alpine3.21 as runtime
 RUN pip install --upgrade pip
 RUN python -m pip install "psycopg[binary,pool]"
 
-COPY --from=build /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+COPY --from=build /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY --from=build /opt/app/ /opt/app/
 
 WORKDIR /opt/app
