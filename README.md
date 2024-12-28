@@ -20,7 +20,7 @@ Prerequisites:
 1. Clone this repo `git clone https://github.com/kreatemore/django-in-docker-starter.git <project_name>`
 2. Change remote in git to point to your repo (or just reinit wit `git init`)
 3. Generate your SECRET_KEY (example: https://djecrety.ir/)
-4. `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up web`
+4. `docker compose -f docker compose.yml -f docker-compose.prod.yml up web`
 5. A django app is now running @ http://localhost:8080/
 
 If you're using PyCharm, you can configure the "app" service (from `docker-compose.yml`) to be the project interpreter.
