@@ -1,3 +1,5 @@
 ignore:
   fix-state: unknown
+
+ignore:
   - vulnerability: CVE-2024-12254
