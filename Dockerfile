@@ -1,4 +1,4 @@
-FROM python:3.13-slim-bullseye AS build
+FROM python:3.14-slim AS build
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -17,12 +17,12 @@ WORKDIR /opt/app
 
 RUN pip install -r /opt/app/requirements.txt
 
-FROM python:3.13-alpine3.21 as runtime
+FROM python:3.14-alpine3.23 as runtime
 
 RUN pip install --upgrade pip
 RUN python -m pip install "psycopg[binary,pool]"
 
-COPY --from=build /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
+COPY --from=build /usr/local/lib/python3.14/site-packages/ /usr/local/lib/python3.14/site-packages/
 COPY --from=build /opt/app/ /opt/app/
 
 WORKDIR /opt/app
